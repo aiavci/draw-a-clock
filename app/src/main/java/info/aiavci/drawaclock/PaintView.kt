@@ -1,18 +1,29 @@
 package info.aiavci.drawaclock
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+
 
 /**
  * Custom view that allows user to create drawings
  */
 class PaintView: View {
+    var drawingAnalyzer = DrawingAnalyzer()
+
+    val conf = Bitmap.Config.ARGB_8888
+
+    var isLookingForSomething = false
+
+    var bitmapObject: Bitmap? = null
+    var bitmapCanvas: Canvas? = null
 
     private val paint = Paint().apply {
         isAntiAlias = true
@@ -26,7 +37,9 @@ class PaintView: View {
         strokeJoin = Paint.Join.ROUND
     }
 
-    private val path = Path()
+//    private val path = Path()
+
+    private var listOfPaths = mutableListOf<Path>()
 
     constructor(context: Context): super(context)
 
@@ -44,15 +57,37 @@ class PaintView: View {
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                path.moveTo(eventX, eventY)
+//                path.moveTo(eventX, eventY)
+                listOfPaths.add(Path().apply {
+                    moveTo(eventX, eventY)
+                })
 
                 return true
             }
+
             MotionEvent.ACTION_MOVE -> {
-                path.lineTo(eventX, eventY)
+                listOfPaths.last().lineTo(eventX, eventY)
             }
 
             MotionEvent.ACTION_UP -> {
+                bitmapObject = Bitmap.createBitmap(width, height, conf)
+
+                bitmapCanvas = Canvas(bitmapObject).apply {
+                    drawColor(Color.WHITE)
+                }
+
+                GlobalScope.launch {
+                    val bitmap = bitmapObject ?: return@launch
+
+                    if (isLookingForSomething) {
+
+                    } else {
+                        // Found what we're looking for
+                        drawingAnalyzer.images.add(bitmap)
+                    }
+
+                    saveBitmap("image.png")
+                }
             }
 
             else -> return false
@@ -66,14 +101,38 @@ class PaintView: View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        canvas.drawPath(path, paint)
+//        canvas.drawPath(path, paint)
+
+        listOfPaths.forEach {path ->
+            canvas.drawPath(path, paint)
+
+            bitmapCanvas?.drawPath(path, paint)
+            // Draw on bitmap
+        }
+    }
+
+    private fun saveBitmap(fileName: String) {
+        try {
+            val file = File(context.filesDir, fileName)
+
+            FileOutputStream(file.absoluteFile).use { out ->
+                bitmapObject?.compress(Bitmap.CompressFormat.PNG, 100, out) // bmp is your Bitmap instance
+            }
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 
     /**
      * Clears image
      */
     fun clearImage() {
-        path.reset()
+//        path.reset()
+
+        listOfPaths.forEach {path ->
+            path.reset()
+        }
 
         invalidate()
     }
