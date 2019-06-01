@@ -7,6 +7,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
+import org.opencv.android.OpenCVLoader
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,7 +16,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        System.loadLibrary("opencv_java4")
+
         setContentView(R.layout.activity_main)
+
+        OpenCVLoader.initDebug()
+
+        initTimber()
 
         mainFab.setOnClickListener { view ->
             if (resetFab.isShown) {
@@ -50,6 +59,8 @@ class MainActivity : AppCompatActivity() {
             paintView.clearImage()
         }
     }
+
+    private fun initTimber() = Timber.plant(Timber.DebugTree())
 
     /**
      * Show snackbar
