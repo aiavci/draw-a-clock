@@ -36,6 +36,4 @@
             app:elevation="6dp"
             app:srcCompat="@android:drawable/ic_input_add" />
 
-
-
 </android.support.constraint.ConstraintLayout>

@@ -8,7 +8,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
+
+    var resultFragment = ResultFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +25,10 @@ class MainActivity : AppCompatActivity() {
 //                showSnackBar(view, "Saving Image")
 
                 setMainFabImage(android.R.drawable.ic_input_add)
+
+                displayDialog()
+
+                extractDrawing()
 
                 return@setOnClickListener
             }
@@ -59,5 +66,47 @@ class MainActivity : AppCompatActivity() {
      */
     private fun setMainFabImage(@DrawableRes resourceId: Int) {
         mainFab.setImageDrawable(ContextCompat.getDrawable(this, resourceId))
+    }
+
+    /**
+     * Extracts drawing from view
+     */
+    private fun extractDrawing() {
+        resultFragment.dismiss()
+
+        displayDialog(false, isPass = true)
+    }
+
+    private fun displayDialog(isLoading: Boolean = true, isPass: Boolean = false) {
+
+        var title = getString(R.string.processing_drawing_title)
+        var description = getString(R.string.processing_drawing_description)
+        var isDismissable = false
+
+        if (!isLoading && isPass) {
+            title = getString(R.string.processing_complete)
+            description = getString(R.string.processing_pass)
+            isDismissable = true
+        } else if (!isLoading) {
+            title = getString(R.string.processing_complete)
+            description = getString(R.string.processing_fail)
+            isDismissable = true
+        }
+
+        val bundle = Bundle().apply {
+            putString("title", title)
+
+            putString("description", description)
+
+            putBoolean("isDismissable", isDismissable)
+
+            putBoolean("isLoading", isLoading)
+        }
+
+        resultFragment = ResultFragment().apply {
+            arguments = bundle
+
+            show(supportFragmentManager, "details")
+        }
     }
 }

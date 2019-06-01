@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="6dp"
+              tools:context=".ResultFragment">
+    <TextView
+            android:id="@+id/messageTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/processing_drawing_title" android:textStyle="bold" android:textSize="24sp"/>
+
+    <TextView
+            android:id="@+id/messageDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:padding="6dp"
+            android:text="@string/processing_drawing_description"/>
+
+    <ProgressBar
+            android:id="@+id/progressLoader"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:visibility="visible"/>
+
+    <LinearLayout
+            android:id="@+id/buttonSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="@string/ok"
+                android:id="@+id/dismissButton"
+        />
+
+    </LinearLayout>
+
+</LinearLayout>
