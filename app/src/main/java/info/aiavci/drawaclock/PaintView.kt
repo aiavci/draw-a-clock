@@ -9,15 +9,20 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 
-
+/**
+ * Custom view that allows user to create drawings
+ */
 class PaintView: View {
 
     private val paint = Paint().apply {
         isAntiAlias = true
+
         strokeWidth = 6f
+
         color = Color.BLACK
 
         style = Paint.Style.STROKE
+
         strokeJoin = Paint.Join.ROUND
     }
 
@@ -29,6 +34,8 @@ class PaintView: View {
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
+    override fun performClick(): Boolean = super.performClick()
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
         super.performClick()
 
@@ -38,17 +45,20 @@ class PaintView: View {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 path.moveTo(eventX, eventY)
+
                 return true
             }
-            MotionEvent.ACTION_MOVE ->
-
+            MotionEvent.ACTION_MOVE -> {
                 path.lineTo(eventX, eventY)
-            MotionEvent.ACTION_UP -> {
             }
+
+            MotionEvent.ACTION_UP -> {}
+
             else -> return false
         }
 
         invalidate()
+
         return true
     }
 
@@ -56,5 +66,14 @@ class PaintView: View {
         super.onDraw(canvas)
 
         canvas.drawPath(path, paint)
+    }
+
+    /**
+     * Clears image
+     */
+    fun clearImage() {
+        path.reset()
+
+        invalidate()
     }
 }
