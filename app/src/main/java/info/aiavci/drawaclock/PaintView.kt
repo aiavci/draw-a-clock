@@ -52,7 +52,8 @@ class PaintView: View {
                 path.lineTo(eventX, eventY)
             }
 
-            MotionEvent.ACTION_UP -> {}
+            MotionEvent.ACTION_UP -> {
+            }
 
             else -> return false
         }
