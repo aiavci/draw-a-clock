@@ -26,6 +26,8 @@ class ResultFragment : DialogFragment() {
         val description = arguments?.getString("description")
         val isDismissable = arguments?.getBoolean("isDismissable") ?: false
         val isLoading = arguments?.getBoolean("isLoading") ?: false
+        val isDoctorShown = arguments?.getBoolean("isDoctorShown", false) ?: false
+        val isOkShown = arguments?.getBoolean("isOkShown", false) ?: false
 
         // Inflate the layout to use as dialog or embedded fragment
         return inflater.inflate(R.layout.fragment_result, container, false).apply {
@@ -36,6 +38,14 @@ class ResultFragment : DialogFragment() {
             buttonSection.visibility = if (isDismissable) View.VISIBLE else View.GONE
 
             progressLoader.visibility = if (isLoading) View.VISIBLE else View.GONE
+
+            if (isDoctorShown) {
+                imageView.visibility = View.VISIBLE
+                imageView.setImageResource(R.drawable.doctor)
+            } else if (isOkShown) {
+                imageView.visibility = View.VISIBLE
+                imageView.setImageResource(R.drawable.ok)
+            }
 
             dismissButton.setOnClickListener {
                 this@ResultFragment.dismiss()

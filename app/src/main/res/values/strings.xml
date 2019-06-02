@@ -4,6 +4,6 @@
     <string name="processing_drawing_description">Your drawing is being processed. Please wait..</string>
     <string name="processing_complete">Processing Complete</string>
     <string name="processing_pass">Clock was drawn correctly</string>
-    <string name="processing_fail">Clock was drawn incorrectly. Please refer to your pharmacist</string>
+    <string name="processing_fail">Clock was drawn incorrectly. Please refer to your physician</string>
     <string name="ok">OK</string>
 </resources>

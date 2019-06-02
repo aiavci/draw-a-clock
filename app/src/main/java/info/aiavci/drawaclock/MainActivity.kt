@@ -58,6 +58,20 @@ class MainActivity : AppCompatActivity() {
 
             paintView.clearImage()
         }
+
+        ResultFragment().apply {
+            arguments = Bundle().apply {
+                putString("title", "Welcome")
+
+                putString("description", "Please draw a clock with the time at ten past eleven.")
+
+                putBoolean("isDismissable", true)
+
+                putBoolean("isLoading", false)
+            }
+
+            show(supportFragmentManager, "details")
+        }
     }
 
     private fun initTimber() = Timber.plant(Timber.DebugTree())
@@ -83,7 +97,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun extractDrawing() {
         // Check if expected value is last item
-        val isPass = paintView.drawingAnalyzer.nextItemToLookFor == "done"
+        val isPass = paintView.listOfPaths.size > 10//true// paintView.drawingAnalyzer.nextItemToLookFor == "done"
 
         resultFragment.dismiss()
 
@@ -95,15 +109,19 @@ class MainActivity : AppCompatActivity() {
         var title = getString(R.string.processing_drawing_title)
         var description = getString(R.string.processing_drawing_description)
         var isDismissable = false
+        var isDoctorShown = false
+        var isOkShown = false
 
         if (!isLoading && isPass) {
             title = getString(R.string.processing_complete)
             description = getString(R.string.processing_pass)
             isDismissable = true
+            isOkShown = true
         } else if (!isLoading) {
             title = getString(R.string.processing_complete)
             description = getString(R.string.processing_fail)
             isDismissable = true
+            isDoctorShown = true
         }
 
         val bundle = Bundle().apply {
@@ -114,6 +132,10 @@ class MainActivity : AppCompatActivity() {
             putBoolean("isDismissable", isDismissable)
 
             putBoolean("isLoading", isLoading)
+
+            putBoolean("isDoctorShown", isDoctorShown)
+
+            putBoolean("isOkShown", isOkShown)
         }
 
         resultFragment = ResultFragment().apply {

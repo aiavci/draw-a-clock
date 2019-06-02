@@ -1,16 +1,11 @@
 package info.aiavci.drawaclock
 
+//import info.aiavci.drawaclock.ObjectDetection.isNumberIdentical
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import info.aiavci.drawaclock.ObjectDetection.checkIsNumberIdentical
-import info.aiavci.drawaclock.ObjectDetection.detectCircleUsingContours
-//import info.aiavci.drawaclock.ObjectDetection.isNumberIdentical
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -43,7 +38,7 @@ class PaintView: View {
 
 //    private val path = Path()
 
-    private var listOfPaths = mutableListOf<Path>()
+    var listOfPaths = mutableListOf<Path>()
 
     constructor(context: Context): super(context)
 
@@ -80,29 +75,26 @@ class PaintView: View {
                     drawColor(Color.WHITE)
                 }
 
-                GlobalScope.launch {
-                    val bitmap = bitmapObject ?: return@launch
+//                GlobalScope.launch {
+//                    val bitmap = bitmapObject ?: return@launch
+//
+//                    if (isLookingForSomething) {
+//
+//                    } else {
+//                        // Found what we're looking for
+//                        drawingAnalyzer.successfulImages.add(bitmap)
+//                    }
 
-                    if (isLookingForSomething) {
+//                    val isNumberIdentical = checkIsNumberIdentical(
+//                        drawingAnalyzer.successfulImages.last(), //Previous image
+//                        bitmap, //Current image
+//                        drawingAnalyzer.nextItemToLookFor//Expected result
+//                        )
 
-                    } else {
-                        // Found what we're looking for
-                        drawingAnalyzer.successfulImages.add(bitmap)
+//                    val result = detectCircleUsingContours(bitmap)
 
-                    }
-
-                    val isNumberIdentical = checkIsNumberIdentical(
-                        drawingAnalyzer.successfulImages.last(), //Previous image
-                        bitmap, //Current image
-                        drawingAnalyzer.nextItemToLookFor//Expected result
-                        )
-
-                    val result = detectCircleUsingContours(bitmap)
-
-                    Timber.d("Check" + result)
-
-                    saveBitmap("image.png")
-                }
+//                    saveBitmap("image.png")
+//                }
             }
 
             else -> return false

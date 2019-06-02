@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="@string/processing_drawing_title" android:textStyle="bold" android:textSize="24sp"/>
+            android:text="@string/processing_drawing_title" android:textStyle="bold" android:textSize="42sp"/>
 
     <TextView
             android:id="@+id/messageDescription"
@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:padding="6dp"
+            android:textSize="24sp"
             android:text="@string/processing_drawing_description"/>
 
     <ProgressBar
@@ -29,6 +30,13 @@
             android:padding="6dp"
             android:visibility="visible"/>
 
+    <ImageView
+            android:src="@drawable/doctor"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_height="200dp" android:id="@+id/imageView"/>
     <LinearLayout
             android:id="@+id/buttonSection"
             android:layout_width="match_parent"
