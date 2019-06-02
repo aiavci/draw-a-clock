@@ -141,6 +141,8 @@ class PaintView: View {
             path.reset()
         }
 
+        listOfPaths.clear()
+
         invalidate()
     }
 }
