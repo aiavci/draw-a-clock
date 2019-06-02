@@ -82,9 +82,12 @@ class MainActivity : AppCompatActivity() {
      * Extracts drawing from view
      */
     private fun extractDrawing() {
+        // Check if expected value is last item
+        val isPass = paintView.drawingAnalyzer.nextItemToLookFor == "done"
+
         resultFragment.dismiss()
 
-        displayDialog(false, isPass = true)
+        displayDialog(false, isPass = isPass)
     }
 
     private fun displayDialog(isLoading: Boolean = true, isPass: Boolean = false) {

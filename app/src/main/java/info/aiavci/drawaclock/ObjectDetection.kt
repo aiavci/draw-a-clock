@@ -47,11 +47,13 @@ object ObjectDetection {
     fun detectCircleUsingContours(inputBitmap: Bitmap): Boolean {
         val srcMat = Mat()
 
+        val result =  Mat()
+
         Utils.bitmapToMat(inputBitmap, srcMat)
 
         Imgproc.cvtColor(srcMat, srcMat, Imgproc.COLOR_RGB2GRAY)
 
-        val result =  Mat()
+
         Imgproc.adaptiveThreshold(srcMat, result, 255.0, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 3, 0.0)
 
         val contours = mutableListOf<MatOfPoint>()
@@ -88,9 +90,11 @@ object ObjectDetection {
             //System.out.println(Arrays.toString(point));
         }
 
-        val center_point = doubleArrayOf((xMax - xMin) / 2, (yMax - yMin) / 2)
+//        val center_point = doubleArrayOf((xMax - xMin) / 2, (yMax - yMin) / 2)
         // System.out.println(xMax +" "+ xMin+ " "+ yMax+ " "+ yMin);
         //System.out.println(Arrays.toString(center_point));
+
+        val center_point = doubleArrayOf(xMin + (xMax - xMin) / 2, yMin + (yMax - yMin) / 2)
 
         var maxR = 0.0
         var minR = 0.0
@@ -116,13 +120,19 @@ object ObjectDetection {
 
         val tol = 39
 
-        return maxR < center_point[0] + center_point[0] * tol / 100 && minR > center_point[0] - center_point[0] * tol / 100
+        contourImg.release()
+        srcMat.release()
+        result.release()
+        contours.forEach { it.release() }
+        points.release()
+
+        return maxR<(center_point[0]-xMin)+(center_point[0]-xMin)*tol/100 && minR>center_point[0]-xMin-(center_point[0]-xMin)*tol/100
     }
 
     /**
      * Checks if last drawn item is what's expected
      */
-    fun isNumberIdentical(
+    fun checkIsNumberIdentical(
         lastProperImage: Bitmap,
         currentImage: Bitmap,
         expectedValue: String

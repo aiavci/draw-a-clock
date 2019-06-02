@@ -5,8 +5,9 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import info.aiavci.drawaclock.ObjectDetection.checkIsNumberIdentical
 import info.aiavci.drawaclock.ObjectDetection.detectCircleUsingContours
-import info.aiavci.drawaclock.ObjectDetection.isNumberIdentical
+//import info.aiavci.drawaclock.ObjectDetection.isNumberIdentical
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -87,12 +88,13 @@ class PaintView: View {
                     } else {
                         // Found what we're looking for
                         drawingAnalyzer.successfulImages.add(bitmap)
+
                     }
 
-                    isNumberIdentical(
+                    val isNumberIdentical = checkIsNumberIdentical(
                         drawingAnalyzer.successfulImages.last(), //Previous image
                         bitmap, //Current image
-                        "12"//Expected result
+                        drawingAnalyzer.nextItemToLookFor//Expected result
                         )
 
                     val result = detectCircleUsingContours(bitmap)
