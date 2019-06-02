@@ -108,6 +108,7 @@ class PaintView: View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
+        canvas.drawCircle(canvas.width/2.0F, canvas.height/2.0F, canvas.width/2.2F, paint)
 //        canvas.drawPath(path, paint)
 
         listOfPaths.forEach {path ->

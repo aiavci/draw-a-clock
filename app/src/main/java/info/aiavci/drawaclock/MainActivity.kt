@@ -97,7 +97,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun extractDrawing() {
         // Check if expected value is last item
-        val isPass = paintView.listOfPaths.size > 10//true// paintView.drawingAnalyzer.nextItemToLookFor == "done"
+        val isPass = paintView.listOfPaths.size > 6//true// paintView.drawingAnalyzer.nextItemToLookFor == "done"
 
         resultFragment.dismiss()
 
