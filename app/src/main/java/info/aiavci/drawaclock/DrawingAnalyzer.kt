@@ -6,7 +6,11 @@ import android.graphics.Bitmap
  * Helper class to analyze drawing content
  */
 class DrawingAnalyzer {
-    var images = mutableListOf<Bitmap>()
+    //Next item to look for
+    var nextItemToLookFor = "1"
+
+    // Map of images that have been successfully registered
+    var successfulImages = mutableListOf<Bitmap>()
 
     /**
      * Detects whether or not an image has a circle

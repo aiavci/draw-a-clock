@@ -42,10 +42,6 @@ object ObjectDetection {
             Imgproc.circle(src, center, radius, Scalar(255.0, 0.0, 255.0), 3, 8, 0)
         }
 
-        //draw circles onto the img.
-//        HighGui.imshow("detected circles", src)
-//        HighGui.waitKey()
-
     }
 
     fun detectCircleUsingContours(inputBitmap: Bitmap): Boolean {
@@ -57,11 +53,6 @@ object ObjectDetection {
 
         val result =  Mat()
         Imgproc.adaptiveThreshold(srcMat, result, 255.0, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 3, 0.0)
-
-//        srcMat.copyTo(result)
-
-        //HighGui.imshow("threshold", result);
-        //HighGui.waitKey();
 
         val contours = mutableListOf<MatOfPoint>()
 
@@ -123,28 +114,20 @@ object ObjectDetection {
             Imgproc.drawContours(contourImg, contours, i, Scalar(255.0, 255.0, 255.0), 1)
         }
 
-        // HighGui.imshow("countour", contourImg);
-        //HighGui.waitKey();
-
         val tol = 39
 
         return maxR < center_point[0] + center_point[0] * tol / 100 && minR > center_point[0] - center_point[0] * tol / 100
     }
 
-//    @JvmStatic
-//    fun main(args: Array<String>) {
-//        // Load the native library.
-//        System.loadLibrary(Core.NATIVE_LIBRARY_NAME)
-//
-//        assert(ObjectDetection.detectCircleUsingContours("img/clock1.png"))
-//        assert(!ObjectDetection.detectCircleUsingContours("img/clock2.png"))
-//        assert(!ObjectDetection.detectCircleUsingContours("img/Bumpy.png"))
-//        assert(!ObjectDetection.detectCircleUsingContours("img/AngledEllipse.png"))
-//        assert(ObjectDetection.detectCircleUsingContours("img/GoodCircle1.png"))
-//        assert(ObjectDetection.detectCircleUsingContours("img/GoodCircle2.png"))
-//        assert(!ObjectDetection.detectCircleUsingContours("img/Hat.png"))
-//        assert(!ObjectDetection.detectCircleUsingContours("img/Square.png"))
-//        assert(!ObjectDetection.detectCircleUsingContours("img/Triangle.png"))
-//        assert(!ObjectDetection.detectCircleUsingContours("img/TallEllipse.png"))
-//    }
+    /**
+     * Checks if last drawn item is what's expected
+     */
+    fun isNumberIdentical(
+        lastProperImage: Bitmap,
+        currentImage: Bitmap,
+        expectedValue: String
+    ): Boolean {
+
+        return false
+    }
 }
